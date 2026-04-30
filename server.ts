@@ -19,6 +19,20 @@ const cache = new NodeCache({ stdTTL: 86400 }); // 24 hours in seconds
 
 app.use(express.json());
 
+app.get("/api/health", (req, res) => {
+  res.json({ 
+    status: "ok", 
+    time: new Date().toISOString(),
+    vercel: !!process.env.VERCEL,
+    env: {
+      has_panchang_id: !!process.env.GOOGLE_SHEET_ID_PANCHANG,
+      has_email: !!process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+      has_key: !!process.env.GOOGLE_PRIVATE_KEY,
+      node_env: process.env.NODE_ENV
+    }
+  });
+});
+
 // Auth for Google Sheets
 const getAuth = () => {
   return new JWT({

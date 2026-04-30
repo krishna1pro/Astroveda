@@ -20,6 +20,7 @@ app.get("/api/health", (req, res) => {
       has_panchang_id: !!process.env.GOOGLE_SHEET_ID_PANCHANG,
       has_email: !!process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
       has_key: !!process.env.GOOGLE_PRIVATE_KEY,
+      has_astro: !!process.env.Astro,
       node_env: process.env.NODE_ENV
     }
   });

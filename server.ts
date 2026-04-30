@@ -1,5 +1,4 @@
 import express from "express";
-import { createServer as createViteServer } from "vite";
 import path from "path";
 import { fileURLToPath } from "url";
 import { GoogleSpreadsheet } from "google-spreadsheet";
@@ -197,7 +196,8 @@ app.post("/api/admin/auth", (req, res) => {
 export default app;
 
 if (process.env.NODE_ENV !== "production") {
-  async function startServer() {
+  const startServer = async () => {
+    const { createServer: createViteServer } = await import("vite");
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: "spa",
@@ -207,7 +207,7 @@ if (process.env.NODE_ENV !== "production") {
     app.listen(PORT, "0.0.0.0", () => {
       console.log(`Server running on http://localhost:${PORT}`);
     });
-  }
+  };
   startServer();
 } else if (!process.env.VERCEL) {
   // Only listen if we are in production but NOT on Vercel (e.g. standard VPS)
